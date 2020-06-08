@@ -18,10 +18,13 @@ namespace AntiCheatSoftware
         private ProgressBar progressBar1;
         private Label label1;
         private Label lblStatus;
-        private LinkLabel lblHelp;
-        private CheckBox checkBox1;
+        private CheckBox chkStealth;
         private ToolTip toolTip;
         private IContainer components;
+        private MenuStrip menuStrip;
+        private ToolStripMenuItem exitToolStripMenuItem;
+        private ToolStripMenuItem listToolStrip;
+        private ToolStripMenuItem helpToolStrip;
         public TextBox txtInput;
 
 
@@ -40,9 +43,13 @@ namespace AntiCheatSoftware
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
             this.txtInput = new System.Windows.Forms.TextBox();
-            this.lblHelp = new System.Windows.Forms.LinkLabel();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.chkStealth = new System.Windows.Forms.CheckBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.listToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnScan
@@ -103,45 +110,70 @@ namespace AntiCheatSoftware
             this.txtInput.Name = "txtInput";
             this.txtInput.Size = new System.Drawing.Size(253, 20);
             this.txtInput.TabIndex = 5;
-            this.txtInput.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // lblHelp
+            // chkStealth
             // 
-            this.lblHelp.AutoSize = true;
-            this.lblHelp.Location = new System.Drawing.Point(93, 219);
-            this.lblHelp.Name = "lblHelp";
-            this.lblHelp.Size = new System.Drawing.Size(29, 13);
-            this.lblHelp.TabIndex = 6;
-            this.lblHelp.TabStop = true;
-            this.lblHelp.Text = "Help";
-            this.lblHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblHelp_LinkClicked);
+            this.chkStealth.AutoSize = true;
+            this.chkStealth.Location = new System.Drawing.Point(341, 215);
+            this.chkStealth.Name = "chkStealth";
+            this.chkStealth.Size = new System.Drawing.Size(89, 17);
+            this.chkStealth.TabIndex = 7;
+            this.chkStealth.Text = "Stealth Mode";
+            this.chkStealth.UseVisualStyleBackColor = true;
+            this.chkStealth.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.chkStealth.MouseHover += new System.EventHandler(this.checkBox1_MouseHover);
             // 
-            // checkBox1
+            // menuStrip
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(357, 215);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(73, 17);
-            this.checkBox1.TabIndex = 7;
-            this.checkBox1.Text = "Automatic";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            this.checkBox1.MouseHover += new System.EventHandler(this.checkBox1_MouseHover);
+            this.menuStrip.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.listToolStrip,
+            this.helpToolStrip,
+            this.exitToolStripMenuItem});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(558, 24);
+            this.menuStrip.TabIndex = 8;
+            this.menuStrip.Text = "menuStrip1";
+            // 
+            // listToolStrip
+            // 
+            this.listToolStrip.Name = "listToolStrip";
+            this.listToolStrip.Size = new System.Drawing.Size(37, 20);
+            this.listToolStrip.Text = "List";
+            this.listToolStrip.Click += new System.EventHandler(this.listToolStripMenuItem_Click_1);
+            // 
+            // helpToolStrip
+            // 
+            this.helpToolStrip.Name = "helpToolStrip";
+            this.helpToolStrip.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStrip.Text = "Help";
+            this.helpToolStrip.Click += new System.EventHandler(this.helpToolStrip_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // AntiCheat
             // 
-            this.BackColor = System.Drawing.Color.Silver;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(558, 299);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.lblHelp);
+            this.Controls.Add(this.chkStealth);
             this.Controls.Add(this.txtInput);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblHead);
             this.Controls.Add(this.btnScan);
+            this.Controls.Add(this.menuStrip);
+            this.MainMenuStrip = this.menuStrip;
             this.Name = "AntiCheat";
             this.Text = "Anti Cheat Software";
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -168,7 +200,8 @@ namespace AntiCheatSoftware
             {
                 lblStatus.Text = "Scanning";
                 lblStatus.ForeColor = System.Drawing.Color.Red;
-                DialogResult killProcess = MessageBox.Show("Process Found\nWould you like to terminate the process: "+txtInput.Text+"?","Confirm",MessageBoxButtons.YesNo,MessageBoxIcon.Error);
+                DialogResult killProcess = MessageBox.Show("Process Found\nWould you like to terminate the process: "+txtInput.Text+"?","Confirm"
+                    ,MessageBoxButtons.YesNo,MessageBoxIcon.Error);
 
                 if (killProcess == DialogResult.Yes)
                 {
@@ -187,82 +220,84 @@ namespace AntiCheatSoftware
 
         private void lblStatus_Click(object sender, EventArgs e)
         {
-            //Haven't clicked button
             lblStatus.Text = "Ready To Scan";
         }
 
         private void progressBar1_Click(object sender, EventArgs e)
         {
-            //Display Progress
-            progressBar1.Visible = true;
-
-          
-        }
-
-        private void Process_Exited(object sender, EventArgs e)
-        {
-
-        }
-
-        public void textBox1_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void lblHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            //Opens the Help form
-            Form2 form2 = new Form2();
-            form2.Show();
+            progressBar1.Visible = true;      
         }
 
         private void checkBox1_MouseHover(object sender, EventArgs e)
         {
             ToolTip toolTip = new ToolTip();
-            toolTip.SetToolTip(this.checkBox1,"When enabled, the program will continuously check for the process entered in the textbox.\nOnce the process has been detected it will automatically close.");
+            toolTip.SetToolTip(this.chkStealth, "Enabling will make the Anti Cheat run in the background");
         }
 
-        bool detected = false;
-
+        //Toggle on/off "Stealth Mode"
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            Process.GetProcessesByName(txtInput.Text);
-            Process[] findProcess = Process.GetProcessesByName(txtInput.Text);
+            bool detected = false;
 
-            while (detected == false)
+            if (chkStealth.Checked)
             {
-
-                if (findProcess.Length > 0)
+                while (detected == false && txtInput.Text != "")
                 {
-                    lblStatus.Text = "Scanning";
-                    lblStatus.ForeColor = System.Drawing.Color.Red;
+                    /*Once the checkbox is ticked and conditions for while loop is satisfied the program will go into "stealth mode".
+                     It will run in the background and will continuously look for the specified process and until it is found, it will
+                     continue running*/
+                    Process.GetProcessesByName(txtInput.Text);
+                    Process[] findProcess = Process.GetProcessesByName(txtInput.Text);
+                    this.Hide();
+                    this.ShowInTaskbar = false;
 
-                    DialogResult killProcess = MessageBox.Show("The process " + txtInput.Text + " has been detected and will now be terminated.", "Anti Cheat Software", MessageBoxButtons.OK);
-
-                        foreach (var p in Process.GetProcessesByName(txtInput.Text))
-                        {
-                        //Terminate the program and sets detected to true to stop the while loop
-                            p.Kill();
-                            detected = true;
-                        }
-
-                        if (killProcess == DialogResult.OK)
+                    if (findProcess.Length != 0)
                     {
-                        //Once OK has been pressed, detected will be set back to false so the automatic feature can be used again
-                        txtInput.Text = "";
-                        detected = false;
+                        detected = true;
+                        DialogResult r = MessageBox.Show("Process has been found and will now close", "Anti Cheat", MessageBoxButtons.OK);
+
+                        if (r == System.Windows.Forms.DialogResult.OK)
+                        {
+                            foreach (var p in Process.GetProcessesByName(txtInput.Text))
+                            {
+                                //When it's found, it will kill the process and unveil the form.
+                                p.Kill();
+                                this.Show();
+                                this.ShowInTaskbar = true;
+                                chkStealth.Checked = false;
+                            }
+
+                        }
                     }
                 }
-
-                else
-                {
-
-                }
-
-                lblStatus.Text = "Ready To Scan";
-                lblStatus.ForeColor = System.Drawing.Color.Green;
-                txtInput.Text = "";
-                progressBar1.Value = 0;
             }
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        public static int toggleList = 0;
+        private void listToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            /*To prevent having multiple of the same forms, I made a public int 'toggleList' & 'toggleHelp', upon clicking opening the new form
+             it will increase the toggle int by 1 so it does not satisfy the if statement hence preventing multiple forms opening. When the form
+             is closed, it will make the toggle int back to 0 so it can be opened again.*/
+
+            if (toggleList == 0)
+            {
+                toggleList += 1;
+                List list = new List();
+                list.Show();
+            }
+        }
+
+        private void helpToolStrip_Click(object sender, EventArgs e)
+        {
+            Help help = new Help();
+            help.Show();
+        }
+
     }
 }

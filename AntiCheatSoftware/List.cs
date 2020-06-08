@@ -11,27 +11,29 @@ using System.Windows.Forms;
 
 namespace AntiCheatSoftware
 {
-    public partial class Form2 : Form
+    public partial class List : Form
     {
 
 
-        public Form2()
+        public List()
         {
             InitializeComponent();
         }
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            //Upon loading it will initiate the loadProcesslist method.
             loadProcesslist();
         }
 
-  
+            //An array 
             Process[] processes = Process.GetProcesses();
 
 
         private void loadProcesslist()
         {
             listProcess.Items.Clear();
+            //Checks all the active process names and adds them to the "listProcess" listview
             foreach (Process process in processes)
             {
                 ListViewItem item = new ListViewItem(process.ProcessName);
@@ -60,6 +62,8 @@ namespace AntiCheatSoftware
 
         public void listProcess_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            /*Once an item is double clicked, it'll hide the task form the taskbar*/
+
             if (listProcess.SelectedItems.Count > 0)
             {
                 var item = listProcess.SelectedItems[0];
@@ -72,5 +76,9 @@ namespace AntiCheatSoftware
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            loadProcesslist();
+        }
     }
 }

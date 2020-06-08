@@ -1,6 +1,6 @@
 ﻿namespace AntiCheatSoftware
 {
-    partial class Form2
+    partial class List
     {
         /// <summary>
         /// Required designer variable.
@@ -29,10 +29,9 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.listProcess = new System.Windows.Forms.ListView();
             this.Names = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -44,27 +43,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "List of Active Processes:";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 248);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(350, 52);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "\r\n1) Double-click to select a process.\r\n2) The selected process will be put into " +
-    "the textbox in the Anti-Cheat form\r\n3) Press Terminate\r\n";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(27, 244);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(81, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "How To Use:";
-            // 
             // listProcess
             // 
             this.listProcess.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -73,7 +51,7 @@
             this.listProcess.HideSelection = false;
             this.listProcess.Location = new System.Drawing.Point(15, 35);
             this.listProcess.Name = "listProcess";
-            this.listProcess.Size = new System.Drawing.Size(369, 206);
+            this.listProcess.Size = new System.Drawing.Size(369, 358);
             this.listProcess.TabIndex = 4;
             this.listProcess.UseCompatibleStateImageBehavior = false;
             this.listProcess.View = System.Windows.Forms.View.Details;
@@ -85,18 +63,28 @@
             this.Names.Text = "Names of Processes";
             this.Names.Width = 355;
             // 
-            // Form2
+            // button1
+            // 
+            this.button1.BackgroundImage = global::AntiCheatSoftware.Properties.Resources.Refresh;
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button1.Location = new System.Drawing.Point(358, 399);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(26, 27);
+            this.button1.TabIndex = 5;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // List
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Silver;
-            this.ClientSize = new System.Drawing.Size(396, 334);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(396, 438);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.listProcess);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "Form2";
-            this.Text = "Help";
+            this.Name = "List";
+            this.Text = "List Of Processes";
             this.Load += new System.EventHandler(this.Form2_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -106,9 +94,8 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ColumnHeader Names;
         public System.Windows.Forms.ListView listProcess;
+        private System.Windows.Forms.Button button1;
     }
 }
