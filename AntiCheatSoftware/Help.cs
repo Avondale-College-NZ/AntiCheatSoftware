@@ -16,5 +16,15 @@ namespace AntiCheatSoftware
         {
             InitializeComponent();
         }
+
+        private void Help_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Help_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            AntiCheat.toggleHelp -= 1;
+        }
     }
 }

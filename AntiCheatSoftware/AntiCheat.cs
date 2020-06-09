@@ -179,29 +179,105 @@ namespace AntiCheatSoftware
 
         }
 
-        private void btnScan_Click(object sender, EventArgs e)
+        //Public variables
+
+        public static int toggleList = 0;
+        public static int toggleHelp = 0;
+        bool detected = false;
+
+
+        //Classes
+
+        //Status Change
+        private void statusScan()
         {
-            //Clicked button
             lblStatus.Text = "Scanning";
             lblStatus.ForeColor = System.Drawing.Color.Red;
             progressBar1.Value = 100;
+        }
 
-            //Detects the input in the textbox, the "process" will be declared as an array
+        private void statusReady()
+        {
+            lblStatus.Text = "Ready To Scan";
+            lblStatus.ForeColor = System.Drawing.Color.Green;
+            progressBar1.Value = 0;
+        }
+
+        /*These limit classes are here to prevent mutliple copies of the form from being opened
+         When clicking the tab on the menustrip, it will +1 to the toggle variable so it cant be opened again until closed (-1 from toggle)*/
+        private void limitList()
+        {
+            if (toggleList == 0)
+            {
+                toggleList += 1;
+                List list = new List();
+                list.Show();
+            }
+
+
+        }
+
+        private void limitHelp()
+        {
+              if (toggleHelp == 0)
+            {
+                toggleHelp += 1;
+                Help help = new Help();
+                help.Show();
+            }
+        }
+
+
+        /*It will run in the background and will continuously look for the specified process and until it is found, it will
+        continue running*/
+        private void stealthMode()
+        {
+            while (detected == false && txtInput.Text != "")
+            {
+
+                this.Hide();
+                this.ShowInTaskbar = false;
+                Process.GetProcessesByName(txtInput.Text);
+                Process[] findProcess = Process.GetProcessesByName(txtInput.Text);
+                if (findProcess.Length != 0)
+                {
+                    statusScan();
+                    detected = true;
+                    DialogResult r = MessageBox.Show("Process has been found and will now close", "Anti Cheat", MessageBoxButtons.OK);
+
+                    if (r == System.Windows.Forms.DialogResult.OK)
+                    {
+                        foreach (var p in Process.GetProcessesByName(txtInput.Text))
+                        {
+                            //When it's found, it will kill the process and unveil the form.
+                            p.Kill();
+                            this.Show();
+                            this.ShowInTaskbar = true;
+                            chkStealth.Checked = false;
+                            statusReady();
+                        }
+
+                    }
+                }
+            }
+        }
+
+        private void btnScan_Click(object sender, EventArgs e)
+        {
+            //Detects the input in the textbox, the "process"
             Process.GetProcessesByName(txtInput.Text);
             Process[] findProcess = Process.GetProcessesByName(txtInput.Text);
-
+            statusScan();
             //Logical statements
             if (findProcess.Length == 0)
             {
                 MessageBox.Show("Process Not Found");
-            }
 
+            }
             else
             {
-                lblStatus.Text = "Scanning";
-                lblStatus.ForeColor = System.Drawing.Color.Red;
-                DialogResult killProcess = MessageBox.Show("Process Found\nWould you like to terminate the process: "+txtInput.Text+"?","Confirm"
-                    ,MessageBoxButtons.YesNo,MessageBoxIcon.Error);
+                DialogResult killProcess = MessageBox.Show("Process Found\nWould you like to terminate the process: " + txtInput.Text + "?", "Confirm"
+                    , MessageBoxButtons.YesNo, MessageBoxIcon.Error);
 
                 if (killProcess == DialogResult.Yes)
                 {
@@ -211,11 +287,9 @@ namespace AntiCheatSoftware
                     }
                 }
             }
-
-            lblStatus.Text = "Ready To Scan";
-            lblStatus.ForeColor = System.Drawing.Color.Green;
             txtInput.Text = "";
-            progressBar1.Value = 0;
+            statusReady();
+
         }
 
         private void lblStatus_Click(object sender, EventArgs e)
@@ -237,39 +311,9 @@ namespace AntiCheatSoftware
         //Toggle on/off "Stealth Mode"
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            bool detected = false;
-
             if (chkStealth.Checked)
             {
-                while (detected == false && txtInput.Text != "")
-                {
-                    /*Once the checkbox is ticked and conditions for while loop is satisfied the program will go into "stealth mode".
-                     It will run in the background and will continuously look for the specified process and until it is found, it will
-                     continue running*/
-                    Process.GetProcessesByName(txtInput.Text);
-                    Process[] findProcess = Process.GetProcessesByName(txtInput.Text);
-                    this.Hide();
-                    this.ShowInTaskbar = false;
-
-                    if (findProcess.Length != 0)
-                    {
-                        detected = true;
-                        DialogResult r = MessageBox.Show("Process has been found and will now close", "Anti Cheat", MessageBoxButtons.OK);
-
-                        if (r == System.Windows.Forms.DialogResult.OK)
-                        {
-                            foreach (var p in Process.GetProcessesByName(txtInput.Text))
-                            {
-                                //When it's found, it will kill the process and unveil the form.
-                                p.Kill();
-                                this.Show();
-                                this.ShowInTaskbar = true;
-                                chkStealth.Checked = false;
-                            }
-
-                        }
-                    }
-                }
+                stealthMode();
             }
         }
 
@@ -278,25 +322,14 @@ namespace AntiCheatSoftware
             Application.Exit();
         }
 
-        public static int toggleList = 0;
         private void listToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            /*To prevent having multiple of the same forms, I made a public int 'toggleList' & 'toggleHelp', upon clicking opening the new form
-             it will increase the toggle int by 1 so it does not satisfy the if statement hence preventing multiple forms opening. When the form
-             is closed, it will make the toggle int back to 0 so it can be opened again.*/
-
-            if (toggleList == 0)
-            {
-                toggleList += 1;
-                List list = new List();
-                list.Show();
-            }
+            limitList();
         }
 
         private void helpToolStrip_Click(object sender, EventArgs e)
         {
-            Help help = new Help();
-            help.Show();
+            limitHelp();
         }
 
     }

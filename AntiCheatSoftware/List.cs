@@ -20,17 +20,28 @@ namespace AntiCheatSoftware
             InitializeComponent();
         }
 
+        public string selectedItem;
+        //An array 
+        Process[] processes = Process.GetProcesses();
+
         private void Form2_Load(object sender, EventArgs e)
         {
             //Upon loading it will initiate the loadProcesslist method.
-            loadProcesslist();
+            loadProcessList();
         }
 
-            //An array 
-            Process[] processes = Process.GetProcesses();
+        private void searchProcess()
+        {
+            //See if the text in the textbox matches any of the items in the viewlist
+            ListViewItem findItem = listProcess.FindItemWithText(txtProcess.Text);
+            if (findItem != null)
+            {
+                listProcess.Items.Clear();
+                listProcess.TopItem = findItem;
+            }
+        }
 
-
-        private void loadProcesslist()
+        private void loadProcessList()
         {
             listProcess.Items.Clear();
             //Checks all the active process names and adds them to the "listProcess" listview
@@ -42,23 +53,6 @@ namespace AntiCheatSoftware
             }
 
         }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        public string selectedItem;
 
         public void listProcess_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -78,7 +72,17 @@ namespace AntiCheatSoftware
 
         private void button1_Click(object sender, EventArgs e)
         {
-            loadProcesslist();
+            loadProcessList();
+        }
+
+        private void List_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            AntiCheat.toggleList -= 1;
+        }
+
+        private void txtProcess_TextChanged(object sender, EventArgs e)
+        {
+            searchProcess();
         }
     }
 }

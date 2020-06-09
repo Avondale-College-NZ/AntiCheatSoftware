@@ -61,6 +61,8 @@
             this.Controls.Add(this.label2);
             this.Name = "Help";
             this.Text = "Help";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Help_FormClosed);
+            this.Load += new System.EventHandler(this.Help_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -32,6 +32,8 @@
             this.listProcess = new System.Windows.Forms.ListView();
             this.Names = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.button1 = new System.Windows.Forms.Button();
+            this.lblProcess = new System.Windows.Forms.Label();
+            this.txtProcess = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -55,7 +57,6 @@
             this.listProcess.TabIndex = 4;
             this.listProcess.UseCompatibleStateImageBehavior = false;
             this.listProcess.View = System.Windows.Forms.View.Details;
-            this.listProcess.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             this.listProcess.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listProcess_MouseDoubleClick);
             // 
             // Names
@@ -74,17 +75,37 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // lblProcess
+            // 
+            this.lblProcess.AutoSize = true;
+            this.lblProcess.Location = new System.Drawing.Point(12, 406);
+            this.lblProcess.Name = "lblProcess";
+            this.lblProcess.Size = new System.Drawing.Size(79, 13);
+            this.lblProcess.TabIndex = 6;
+            this.lblProcess.Text = "Process Name:";
+            // 
+            // txtProcess
+            // 
+            this.txtProcess.Location = new System.Drawing.Point(97, 403);
+            this.txtProcess.Name = "txtProcess";
+            this.txtProcess.Size = new System.Drawing.Size(242, 20);
+            this.txtProcess.TabIndex = 7;
+            this.txtProcess.TextChanged += new System.EventHandler(this.txtProcess_TextChanged);
+            // 
             // List
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(396, 438);
+            this.Controls.Add(this.txtProcess);
+            this.Controls.Add(this.lblProcess);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.listProcess);
             this.Controls.Add(this.label1);
             this.Name = "List";
             this.Text = "List Of Processes";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.List_FormClosed);
             this.Load += new System.EventHandler(this.Form2_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -97,5 +118,7 @@
         private System.Windows.Forms.ColumnHeader Names;
         public System.Windows.Forms.ListView listProcess;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lblProcess;
+        private System.Windows.Forms.TextBox txtProcess;
     }
 }
