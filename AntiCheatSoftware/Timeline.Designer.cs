@@ -30,8 +30,8 @@
         {
             this.listTimeline = new System.Windows.Forms.ListView();
             this.ProcessNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DateClose = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ProcessName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.DateClosed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.MethodClose = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
@@ -39,8 +39,8 @@
             // 
             this.listTimeline.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ProcessNumber,
+            this.DateClose,
             this.ProcessName,
-            this.DateClosed,
             this.MethodClose});
             this.listTimeline.GridLines = true;
             this.listTimeline.HideSelection = false;
@@ -57,15 +57,15 @@
             this.ProcessNumber.Text = "Process";
             this.ProcessNumber.Width = 50;
             // 
+            // DateClose
+            // 
+            this.DateClose.Text = "Date Closed";
+            this.DateClose.Width = 161;
+            // 
             // ProcessName
             // 
             this.ProcessName.Text = "Name";
-            this.ProcessName.Width = 161;
-            // 
-            // DateClosed
-            // 
-            this.DateClosed.Text = "Date Closed";
-            this.DateClosed.Width = 131;
+            this.ProcessName.Width = 131;
             // 
             // MethodClose
             // 
@@ -89,8 +89,8 @@
 
         private System.Windows.Forms.ListView listTimeline;
         private System.Windows.Forms.ColumnHeader ProcessNumber;
+        private System.Windows.Forms.ColumnHeader DateClose;
         private System.Windows.Forms.ColumnHeader ProcessName;
-        private System.Windows.Forms.ColumnHeader DateClosed;
         private System.Windows.Forms.ColumnHeader MethodClose;
     }
 }

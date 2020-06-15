@@ -246,7 +246,7 @@ namespace AntiCheatSoftware
                 SqlCommand sqlCmd = new SqlCommand("Timeline", sqlCon);
                 sqlCmd.CommandType = CommandType.StoredProcedure;
                 sqlCmd.Parameters.AddWithValue("@ProcessName", txtInput.Text.Trim());
-                sqlCmd.Parameters.AddWithValue("@DateTime", DateTime.Now.ToOADate());
+                sqlCmd.Parameters.AddWithValue("@DateTime", DateTime.Now.ToLocalTime());
                 if (stealth == true)
                 {
                     sqlCmd.Parameters.AddWithValue("@MethodClose", "Stealth");
