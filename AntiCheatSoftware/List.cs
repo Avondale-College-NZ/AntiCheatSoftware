@@ -33,12 +33,24 @@ namespace AntiCheatSoftware
         private void searchProcess()
         {
             //See if the text in the textbox matches any of the items in the viewlist
-            ListViewItem findItem = listProcess.FindItemWithText(txtProcess.Text);
-            if (findItem != null)
+            if (txtProcess.Text != "")
             {
-                listProcess.Items.Clear();
-                listProcess.TopItem = findItem;
+                System.Collections.IList list = listProcess.Items;
+                for(int i = 0; i < list.Count; i++)
+                {
+                    ListViewItem item = (ListViewItem)list[i];
+                    if (item.Text.Contains(txtProcess.Text.ToLower()))
+                    {
+                        
+                    }
+
+                    else
+                    {
+                        listProcess.Items.Remove(item);
+                    }
+                }
             }
+           
         }
 
         private void loadProcessList()
