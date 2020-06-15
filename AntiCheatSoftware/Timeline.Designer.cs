@@ -80,6 +80,7 @@
             this.Controls.Add(this.listTimeline);
             this.Name = "Timeline";
             this.Text = "Timeline";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Timeline_FormClosed);
             this.Load += new System.EventHandler(this.Timeline_Load);
             this.ResumeLayout(false);
 

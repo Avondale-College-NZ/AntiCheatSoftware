@@ -23,6 +23,7 @@ namespace AntiCheatSoftware
 
         void FillList()
         {
+            //Open connection to database, connect to query
             using (SqlConnection sqlCon = new SqlConnection(conString))
             {
                 sqlCon.Open();
@@ -56,6 +57,11 @@ namespace AntiCheatSoftware
         private void Timeline_Load(object sender, EventArgs e)
         {
             FillList();
+        }
+
+        private void Timeline_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            AntiCheat.toggleHistory -= 1;
         }
     }
 }

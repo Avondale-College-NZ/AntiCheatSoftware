@@ -48,10 +48,10 @@ namespace AntiCheatSoftware
             this.chkStealth = new System.Windows.Forms.CheckBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.timelineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.timelineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -113,6 +113,7 @@ namespace AntiCheatSoftware
             this.txtInput.Name = "txtInput";
             this.txtInput.Size = new System.Drawing.Size(253, 20);
             this.txtInput.TabIndex = 5;
+            this.txtInput.TextChanged += new System.EventHandler(this.txtInput_TextChanged);
             // 
             // chkStealth
             // 
@@ -140,6 +141,13 @@ namespace AntiCheatSoftware
             this.menuStrip.TabIndex = 8;
             this.menuStrip.Text = "menuStrip1";
             // 
+            // timelineToolStripMenuItem
+            // 
+            this.timelineToolStripMenuItem.Name = "timelineToolStripMenuItem";
+            this.timelineToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
+            this.timelineToolStripMenuItem.Text = "Timeline";
+            this.timelineToolStripMenuItem.Click += new System.EventHandler(this.timelineToolStripMenuItem_Click);
+            // 
             // listToolStrip
             // 
             this.listToolStrip.Name = "listToolStrip";
@@ -160,13 +168,6 @@ namespace AntiCheatSoftware
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // timelineToolStripMenuItem
-            // 
-            this.timelineToolStripMenuItem.Name = "timelineToolStripMenuItem";
-            this.timelineToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
-            this.timelineToolStripMenuItem.Text = "Timeline";
-            this.timelineToolStripMenuItem.Click += new System.EventHandler(this.timelineToolStripMenuItem_Click);
             // 
             // AntiCheat
             // 
@@ -194,6 +195,7 @@ namespace AntiCheatSoftware
 
         public static int toggleList = 0;
         public static int toggleHelp = 0;
+        public static int toggleHistory = 0;
         bool detected = false;
         bool stealth = false;
         string connectionString = @"Data Source = tpisql01.avcol.school.nz; Initial Catalog = ProcessTimeline; Integrated Security = True;";
@@ -237,12 +239,25 @@ namespace AntiCheatSoftware
             }
         }
 
-
-        private void GetDateTime()
+        private void limitHistory()
         {
+           if (toggleHistory == 0)
+            {
+                toggleHistory += 1;
+                Timeline timeline = new Timeline();
+                timeline.Show();
+            }
+        }
+
+
+        private void AddData()
+        {
+            //Adds the date & time, process name and method of closing into the database(in connectionString)
             using (SqlConnection sqlCon = new SqlConnection(connectionString))
             {
+                //First we open the connection
                 sqlCon.Open();
+                //SqlCommand helps us execute commands from here to the database
                 SqlCommand sqlCmd = new SqlCommand("Timeline", sqlCon);
                 sqlCmd.CommandType = CommandType.StoredProcedure;
                 sqlCmd.Parameters.AddWithValue("@ProcessName", txtInput.Text.Trim());
@@ -290,7 +305,7 @@ namespace AntiCheatSoftware
                             this.Show();
                             this.ShowInTaskbar = true;
                             chkStealth.Checked = false;
-                            GetDateTime();
+                            AddData();
                             statusReady();
                         }
 
@@ -322,7 +337,7 @@ namespace AntiCheatSoftware
                     foreach (var p in Process.GetProcessesByName(txtInput.Text))
                     {
                         p.Kill();
-                        GetDateTime();
+                        AddData();
                     }
                 }
             }
@@ -373,8 +388,12 @@ namespace AntiCheatSoftware
 
         private void timelineToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Timeline timeline = new Timeline();
-            timeline.Show();
+            limitHistory();
+        }
+
+        private void txtInput_TextChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }
