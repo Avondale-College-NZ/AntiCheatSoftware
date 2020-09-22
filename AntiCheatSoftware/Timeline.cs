@@ -23,7 +23,7 @@ namespace AntiCheatSoftware
 
         void FillList()
         {
-            //Open connection to database, connect to query
+            //Open connection to ProcessTimeline database and connect to Timeline query 
             using (SqlConnection sqlCon = new SqlConnection(conString))
             {
                 sqlCon.Open();
@@ -33,6 +33,7 @@ namespace AntiCheatSoftware
                 sqlCmd.Connection = sqlCon;
                 dr = sqlCmd.ExecuteReader();
 
+                //Adds all the columns from tblTimeline into the listProcess listview
                 while (dr.Read())
                 {
                     ListViewItem item = new ListViewItem(dr[0].ToString());
@@ -46,11 +47,6 @@ namespace AntiCheatSoftware
 
 
             }
-
-        }
-
-        private void listTimeline_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
         }
 

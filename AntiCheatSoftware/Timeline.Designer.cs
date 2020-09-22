@@ -50,7 +50,6 @@
             this.listTimeline.TabIndex = 0;
             this.listTimeline.UseCompatibleStateImageBehavior = false;
             this.listTimeline.View = System.Windows.Forms.View.Details;
-            this.listTimeline.SelectedIndexChanged += new System.EventHandler(this.listTimeline_SelectedIndexChanged);
             // 
             // ProcessNumber
             // 
