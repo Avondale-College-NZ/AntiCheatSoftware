@@ -436,6 +436,7 @@ namespace AntiCheatSoftware
             if (txtProcess.Text != "")
             {
                 System.Collections.IList list = listProcess.Items;
+                //The viewlist will be filtered through a for loop
                 for (int i = 0; i < list.Count; i++)
                 {
                     ListViewItem item = (ListViewItem)list[i];
@@ -455,14 +456,13 @@ namespace AntiCheatSoftware
         //
         //Events
         //
-
         private void btnScan_Click(object sender, EventArgs e)
         {
             //Detects the input in the textbox, the "process"
             Process.GetProcessesByName(txtInput.Text);
             Process[] findProcess = Process.GetProcessesByName(txtInput.Text);
             StatusScan();
-            //Logical statements
+
             if (findProcess.Length == 0)
             {
                 MessageBox.Show("Process Not Found");
@@ -545,7 +545,7 @@ namespace AntiCheatSoftware
 
         private void listProcess_SelectedIndexChanged(object sender, EventArgs e)
         {
-            /*Once an item is double clicked, it'll hide the task form the taskbar*/
+            //Once an item is double clicked, it'll hide the task form the taskbar
 
             if (listProcess.SelectedItems.Count > 0)
             {
