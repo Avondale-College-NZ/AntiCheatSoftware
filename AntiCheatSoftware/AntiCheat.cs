@@ -17,7 +17,7 @@ namespace AntiCheatSoftware
         private Button btnScan;
         private Label lblHead;
         private ProgressBar progressBar1;
-        private Label label1;
+        private Label lblTitle;
         private Label lblStatus;
         private CheckBox chkStealth;
         private ToolTip toolTip;
@@ -26,8 +26,8 @@ namespace AntiCheatSoftware
         private ToolStripMenuItem exitToolStripMenuItem;
         private ToolStripMenuItem helpToolStrip;
         private ToolStripMenuItem timelineToolStripMenuItem;
-        private NotifyIcon NotifyIcon1;
-        private ContextMenuStrip contextMenuStrip1;
+        private NotifyIcon AntiCheatNotifyIcon;
+        private ContextMenuStrip NotifyIconMenuStrip;
         private ToolStripMenuItem showToolStripMenuItem;
         private ToolStripMenuItem closeToolStripMenuItem;
         private Timer timer1;
@@ -55,7 +55,7 @@ namespace AntiCheatSoftware
             this.lblHead = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.txtInput = new System.Windows.Forms.TextBox();
             this.chkStealth = new System.Windows.Forms.CheckBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -63,19 +63,19 @@ namespace AntiCheatSoftware
             this.timelineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.NotifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.AntiCheatNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.NotifyIconMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.listProcess = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txtProcess = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnRefresh = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
+            this.NotifyIconMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnScan
@@ -120,15 +120,15 @@ namespace AntiCheatSoftware
             this.progressBar1.TabIndex = 3;
             this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
             // 
-            // label1
+            // lblTitle
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(52, 34);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(275, 31);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Anti Cheat Software";
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Location = new System.Drawing.Point(52, 34);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(275, 31);
+            this.lblTitle.TabIndex = 4;
+            this.lblTitle.Text = "Anti Cheat Software";
             // 
             // txtInput
             // 
@@ -165,7 +165,7 @@ namespace AntiCheatSoftware
             // timelineToolStripMenuItem
             // 
             this.timelineToolStripMenuItem.Name = "timelineToolStripMenuItem";
-            this.timelineToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
+            this.timelineToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.timelineToolStripMenuItem.Text = "Timeline";
             this.timelineToolStripMenuItem.Click += new System.EventHandler(this.timelineToolStripMenuItem_Click);
             // 
@@ -179,38 +179,38 @@ namespace AntiCheatSoftware
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // NotifyIcon1
+            // AntiCheatNotifyIcon
             // 
-            this.NotifyIcon1.BalloonTipText = "The software will now run until you stop it or until the specified process is fou" +
+            this.AntiCheatNotifyIcon.BalloonTipText = "The software will now run until you stop it or until the specified process is fou" +
     "nd";
-            this.NotifyIcon1.BalloonTipTitle = "Automatic Mode";
-            this.NotifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
-            this.NotifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("NotifyIcon1.Icon")));
-            this.NotifyIcon1.Text = "Anti Cheat Software";
+            this.AntiCheatNotifyIcon.BalloonTipTitle = "Automatic Mode";
+            this.AntiCheatNotifyIcon.ContextMenuStrip = this.NotifyIconMenuStrip;
+            this.AntiCheatNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("AntiCheatNotifyIcon.Icon")));
+            this.AntiCheatNotifyIcon.Text = "Anti Cheat Software";
             // 
-            // contextMenuStrip1
+            // NotifyIconMenuStrip
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.NotifyIconMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showToolStripMenuItem,
             this.closeToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(104, 48);
+            this.NotifyIconMenuStrip.Name = "contextMenuStrip1";
+            this.NotifyIconMenuStrip.Size = new System.Drawing.Size(181, 70);
             // 
             // showToolStripMenuItem
             // 
             this.showToolStripMenuItem.Name = "showToolStripMenuItem";
-            this.showToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.showToolStripMenuItem.Text = "Show";
             this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
@@ -231,6 +231,11 @@ namespace AntiCheatSoftware
             this.listProcess.UseCompatibleStateImageBehavior = false;
             this.listProcess.View = System.Windows.Forms.View.Details;
             this.listProcess.SelectedIndexChanged += new System.EventHandler(this.listProcess_SelectedIndexChanged);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Process Name";
+            this.columnHeader1.Width = 330;
             // 
             // txtProcess
             // 
@@ -258,11 +263,6 @@ namespace AntiCheatSoftware
             this.label2.TabIndex = 12;
             this.label2.Text = "List of active processes:";
             // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Process Name";
-            this.columnHeader1.Width = 330;
-            // 
             // btnRefresh
             // 
             this.btnRefresh.BackgroundImage = global::AntiCheatSoftware.Properties.Resources.Refresh;
@@ -285,7 +285,7 @@ namespace AntiCheatSoftware
             this.Controls.Add(this.listProcess);
             this.Controls.Add(this.chkStealth);
             this.Controls.Add(this.txtInput);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblHead);
@@ -296,7 +296,7 @@ namespace AntiCheatSoftware
             this.Text = "Anti Cheat Software";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.contextMenuStrip1.ResumeLayout(false);
+            this.NotifyIconMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -311,7 +311,7 @@ namespace AntiCheatSoftware
         bool stealth = false;
         string connectionString = @"Data Source = tpisql01.avcol.school.nz; Initial Catalog = ProcessTimeline; Integrated Security = True;";
 
-        //Classes
+        //Methods
 
         //Status Change
         private void StatusScan()
@@ -389,7 +389,7 @@ namespace AntiCheatSoftware
             if (chkStealth.Checked == true && txtInput.Text != "")
             {
                 this.Hide();
-                NotifyIcon1.Visible = true;
+                AntiCheatNotifyIcon.Visible = true;
 
                 Process.GetProcessesByName(txtInput.Text);
                 Process[] findProcess = Process.GetProcessesByName(txtInput.Text);
@@ -408,7 +408,7 @@ namespace AntiCheatSoftware
                         StatusReady();
 
                         this.Show();
-                        NotifyIcon1.Visible = false;
+                        AntiCheatNotifyIcon.Visible = false;
                     }
 
                 }
