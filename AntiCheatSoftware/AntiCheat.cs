@@ -14,7 +14,7 @@ namespace AntiCheatSoftware
 {
     public partial class AntiCheat : Form
     {
-        private Button btnScan;
+        private Button btnTerminate;
         private Label lblHead;
         private ProgressBar progressBar1;
         private Label lblTitle;
@@ -51,7 +51,7 @@ namespace AntiCheatSoftware
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AntiCheat));
-            this.btnScan = new System.Windows.Forms.Button();
+            this.btnTerminate = new System.Windows.Forms.Button();
             this.lblHead = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
@@ -78,15 +78,15 @@ namespace AntiCheatSoftware
             this.NotifyIconMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // btnScan
+            // btnTerminate
             // 
-            this.btnScan.Location = new System.Drawing.Point(317, 114);
-            this.btnScan.Name = "btnScan";
-            this.btnScan.Size = new System.Drawing.Size(75, 23);
-            this.btnScan.TabIndex = 0;
-            this.btnScan.Text = "Terminate";
-            this.btnScan.UseVisualStyleBackColor = true;
-            this.btnScan.Click += new System.EventHandler(this.btnScan_Click);
+            this.btnTerminate.Location = new System.Drawing.Point(317, 114);
+            this.btnTerminate.Name = "btnTerminate";
+            this.btnTerminate.Size = new System.Drawing.Size(75, 23);
+            this.btnTerminate.TabIndex = 0;
+            this.btnTerminate.Text = "Terminate";
+            this.btnTerminate.UseVisualStyleBackColor = true;
+            this.btnTerminate.Click += new System.EventHandler(this.btnTerminate_Click);
             // 
             // lblHead
             // 
@@ -109,7 +109,6 @@ namespace AntiCheatSoftware
             this.lblStatus.Size = new System.Drawing.Size(140, 24);
             this.lblStatus.TabIndex = 2;
             this.lblStatus.Text = "Ready To Scan";
-            this.lblStatus.Click += new System.EventHandler(this.lblStatus_Click);
             // 
             // progressBar1
             // 
@@ -198,19 +197,19 @@ namespace AntiCheatSoftware
             this.showToolStripMenuItem,
             this.closeToolStripMenuItem});
             this.NotifyIconMenuStrip.Name = "contextMenuStrip1";
-            this.NotifyIconMenuStrip.Size = new System.Drawing.Size(181, 70);
+            this.NotifyIconMenuStrip.Size = new System.Drawing.Size(104, 48);
             // 
             // showToolStripMenuItem
             // 
             this.showToolStripMenuItem.Name = "showToolStripMenuItem";
-            this.showToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.showToolStripMenuItem.Text = "Show";
             this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
@@ -289,7 +288,7 @@ namespace AntiCheatSoftware
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblHead);
-            this.Controls.Add(this.btnScan);
+            this.Controls.Add(this.btnTerminate);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
             this.Name = "AntiCheat";
@@ -354,6 +353,8 @@ namespace AntiCheatSoftware
             }
         }
 
+        /*This method will see how the specified process was terminated and will add the process name, time closed and method closed to
+         the database*/ 
         private void AddData()
         {
             //Adds the date & time, process name and method of closing into the database(in connectionString)
@@ -381,9 +382,8 @@ namespace AntiCheatSoftware
         }
 
 
-        //While loop to continiously scan until the specified process is detected and will close it
-        /*It will run in the background and will continuously look for the specified process and until it is found, it will
-       continue running*/
+        /*It will run in the background and will look for the specified process until it is found. 
+          The user can also restart the program or go to the notify icon on the system tray to reveal the form*/
         private void StealthMode()
         {
             if (chkStealth.Checked == true && txtInput.Text != "")
@@ -456,14 +456,14 @@ namespace AntiCheatSoftware
         //
         //Events
         //
-        private void btnScan_Click(object sender, EventArgs e)
+        private void btnTerminate_Click(object sender, EventArgs e)
         {
             //Detects the input in the textbox, the "process"
             Process.GetProcessesByName(txtInput.Text);
-            Process[] findProcess = Process.GetProcessesByName(txtInput.Text);
+            Process[] process = Process.GetProcessesByName(txtInput.Text);
             StatusScan();
 
-            if (findProcess.Length == 0)
+            if (process.Length == 0)
             {
                 MessageBox.Show("Process Not Found");
 
@@ -485,11 +485,6 @@ namespace AntiCheatSoftware
             txtInput.Text = "";
             StatusReady();
 
-        }
-
-        private void lblStatus_Click(object sender, EventArgs e)
-        {
-            lblStatus.Text = "Ready To Scan";
         }
 
         private void progressBar1_Click(object sender, EventArgs e)
@@ -517,6 +512,7 @@ namespace AntiCheatSoftware
             StealthMode();
         }
 
+        //Tabs on the menu strip
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -532,6 +528,7 @@ namespace AntiCheatSoftware
             LimitHistory();
         }
 
+        //Tabs on the notify icon menu strip
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Show();
@@ -545,7 +542,8 @@ namespace AntiCheatSoftware
 
         private void listProcess_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //Once an item is double clicked, it'll hide the task form the taskbar
+            /*Once a process in the listProcess listview is selected, the name of the process
+             will appear in the txtInput textbox*/
 
             if (listProcess.SelectedItems.Count > 0)
             {
@@ -566,5 +564,7 @@ namespace AntiCheatSoftware
         {
             loadProcessList();
         }
+
+
     }
 }
