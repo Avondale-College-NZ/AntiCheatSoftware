@@ -37,6 +37,7 @@ namespace AntiCheatSoftware
         private Label label2;
         private ColumnHeader columnHeader1;
         private Button btnRefresh;
+        private Button btnSearch;
         public TextBox txtInput;
 
 
@@ -74,6 +75,7 @@ namespace AntiCheatSoftware
             this.lblSearch = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnRefresh = new System.Windows.Forms.Button();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.NotifyIconMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -240,9 +242,8 @@ namespace AntiCheatSoftware
             // 
             this.txtProcess.Location = new System.Drawing.Point(140, 600);
             this.txtProcess.Name = "txtProcess";
-            this.txtProcess.Size = new System.Drawing.Size(207, 20);
+            this.txtProcess.Size = new System.Drawing.Size(218, 20);
             this.txtProcess.TabIndex = 10;
-            this.txtProcess.TextChanged += new System.EventHandler(this.txtProcess_TextChanged);
             // 
             // lblSearch
             // 
@@ -266,17 +267,28 @@ namespace AntiCheatSoftware
             // 
             this.btnRefresh.BackgroundImage = global::AntiCheatSoftware.Properties.Resources.Refresh;
             this.btnRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnRefresh.Location = new System.Drawing.Point(353, 597);
+            this.btnRefresh.Location = new System.Drawing.Point(364, 597);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(25, 25);
             this.btnRefresh.TabIndex = 13;
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(140, 627);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(75, 23);
+            this.btnSearch.TabIndex = 14;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
             // AntiCheat
             // 
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(454, 640);
+            this.ClientSize = new System.Drawing.Size(454, 659);
+            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblSearch);
@@ -302,11 +314,11 @@ namespace AntiCheatSoftware
         }
 
         //Public variables
-
-        public static int toggleList = 0;
-        public static int toggleHelp = 0;
-        public static int toggleHistory = 0;
+        public static bool openHelp = false;
+        public static bool openTimeline = false;
         public string selectedItem;
+
+        //Private variables
         bool stealth = false;
         string connectionString = @"Data Source = tpisql01.avcol.school.nz; Initial Catalog = ProcessTimeline; Integrated Security = True;";
 
@@ -331,23 +343,23 @@ namespace AntiCheatSoftware
 
 
         /*These limit classes are here to prevent mutliple copies of the form from being opened
-         When clicking the tab on the menustrip, it will +1 to the toggle variable so it cant be opened again until closed (-1 from toggle)*/
+         Upon opening the tabs, the methods are executed*/
 
         private void LimitHelp()
         {
-              if (toggleHelp == 0)
+              if (openHelp == false)
             {
-                toggleHelp += 1;
+                openHelp = true;
                 Help help = new Help();
                 help.Show();
             }
         }
 
-        private void LimitHistory()
+        private void LimitTimeline()
         {
-            if (toggleHistory == 0)
+            if (openTimeline == false)
             {
-                toggleHistory += 1;
+                openTimeline = true;
                 Timeline timeline = new Timeline();
                 timeline.Show();
             }
@@ -437,18 +449,12 @@ namespace AntiCheatSoftware
             {
                 System.Collections.IList list = listProcess.Items;
                 //The viewlist will be filtered through a for loop
-                for (int i = 0; i < list.Count; i++)
+                foreach (ListViewItem item in listProcess.Items)
                 {
-                    ListViewItem item = (ListViewItem)list[i];
-                    if (item.Text.Contains(txtProcess.Text.ToLower()))
-                    {
-
-                    }
-
-                    else
+                    if (!item.ToString().ToLower().Contains(txtProcess.Text.ToLower()))
                     {
                         listProcess.Items.Remove(item);
-                    }
+                    }   
                 }
             }
 
@@ -525,7 +531,7 @@ namespace AntiCheatSoftware
 
         private void timelineToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LimitHistory();
+            LimitTimeline();
         }
 
         //Tabs on the notify icon menu strip
@@ -555,16 +561,15 @@ namespace AntiCheatSoftware
             }
         }
 
-        private void txtProcess_TextChanged(object sender, EventArgs e)
-        {
-            searchProcess();
-        }
-
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             loadProcessList();
+            txtProcess.Text = "";
         }
 
-
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            searchProcess();
+        }
     }
 }

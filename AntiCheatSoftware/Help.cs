@@ -24,7 +24,7 @@ namespace AntiCheatSoftware
 
         private void Help_FormClosed(object sender, FormClosedEventArgs e)
         {
-            AntiCheat.toggleHelp -= 1;
+            AntiCheat.openHelp = false;
         }
     }
 }
