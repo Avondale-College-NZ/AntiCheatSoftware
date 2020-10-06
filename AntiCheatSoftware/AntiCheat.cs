@@ -32,7 +32,7 @@ namespace AntiCheatSoftware
         private ToolStripMenuItem closeToolStripMenuItem;
         private Timer stealthTimer;
         private ListView listProcess;
-        private TextBox txtProcess;
+        private TextBox txtSearch;
         private Label lblSearch;
         private Label label2;
         private ColumnHeader columnHeader1;
@@ -69,7 +69,7 @@ namespace AntiCheatSoftware
             this.stealthTimer = new System.Windows.Forms.Timer(this.components);
             this.listProcess = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.txtProcess = new System.Windows.Forms.TextBox();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
@@ -234,13 +234,13 @@ namespace AntiCheatSoftware
             this.columnHeader1.Text = "Process Name";
             this.columnHeader1.Width = 330;
             // 
-            // txtProcess
+            // txtSearch
             // 
-            this.txtProcess.Location = new System.Drawing.Point(140, 600);
-            this.txtProcess.Name = "txtProcess";
-            this.txtProcess.Size = new System.Drawing.Size(249, 20);
-            this.txtProcess.TabIndex = 10;
-            this.txtProcess.TextChanged += new System.EventHandler(this.txtProcess_TextChanged);
+            this.txtSearch.Location = new System.Drawing.Point(140, 600);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(249, 20);
+            this.txtSearch.TabIndex = 10;
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // lblSearch
             // 
@@ -266,7 +266,7 @@ namespace AntiCheatSoftware
             this.ClientSize = new System.Drawing.Size(454, 659);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblSearch);
-            this.Controls.Add(this.txtProcess);
+            this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.listProcess);
             this.Controls.Add(this.chkStealth);
             this.Controls.Add(this.txtInput);
@@ -312,9 +312,13 @@ namespace AntiCheatSoftware
             lblStatus.ForeColor = System.Drawing.Color.Green;
             scanProgress.Value = 0;
             txtInput.Text = "";
+            //Reset stealth mode
+            stealthTimer.Stop();
+            stealth = false;
             chkStealth.Checked = false;
+            this.Show();
+            antiCheatNotifyIcon.Visible = false;
         }
-
 
         /*These limit classes are here to prevent mutliple copies of the form from being opened
          Upon opening the tabs, the methods are executed*/
@@ -378,23 +382,18 @@ namespace AntiCheatSoftware
                 antiCheatNotifyIcon.Visible = true;
 
                 Process.GetProcessesByName(txtInput.Text);
-                Process[] findProcess = Process.GetProcessesByName(txtInput.Text);
+                Process[] process = Process.GetProcessesByName(txtInput.Text);
 
-                if (findProcess.Length != 0)
+                if (process.Length != 0)
                 {
-                    StatusScan();
                     stealth = true;
 
                     foreach (var p in Process.GetProcessesByName(txtInput.Text))
                     {
                         //When it's found, it will kill the process and unveil the form.
                         p.Kill();
-                        chkStealth.Checked = false;
                         AddData();
                         StatusReady();
-
-                        this.Show();
-                        antiCheatNotifyIcon.Visible = false;
                     }
 
                 }
@@ -406,7 +405,7 @@ namespace AntiCheatSoftware
         {
             Process[] processes = Process.GetProcesses();
             listProcess.Items.Clear();
-            //Checks all the active process names and adds them to the "listProcess" listview
+            //Loops through all the active process names and adds them to the "listProcess" listview
             foreach (Process process in processes)
             {
                 ListViewItem item = new ListViewItem(process.ProcessName);
@@ -418,21 +417,21 @@ namespace AntiCheatSoftware
 
         private void searchProcess()
         {
+
             //See if the text in the textbox matches any of the items in the viewlist
-            if (txtProcess.Text != "")
+            if (txtSearch.Text != "")
             {
-                System.Collections.IList list = listProcess.Items;
                 //The viewlist will be filtered through a for loop
                 foreach (ListViewItem item in listProcess.Items)
                 {
-                    if (!item.ToString().ToLower().Contains(txtProcess.Text.ToLower()))
+                    if (!item.ToString().ToLower().Contains(txtSearch.Text.ToLower()))
                     {
                         listProcess.Items.Remove(item);
-                    }   
+                    }                   
                 }
             }
 
-            else if (txtProcess.Text == "")
+            else if (txtSearch.Text == "")
             {
                 //Repopulates the listview, undoing the search filter
                 loadProcessList();
@@ -543,11 +542,10 @@ namespace AntiCheatSoftware
             }
         }
 
-        private void txtProcess_TextChanged(object sender, EventArgs e)
+        private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             //When there's a change in the textbox, look for the searched item
             searchProcess();
         }
-
     }
 }
