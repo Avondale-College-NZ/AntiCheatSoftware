@@ -57,7 +57,7 @@ namespace AntiCheatSoftware
 
         private void Timeline_FormClosed(object sender, FormClosedEventArgs e)
         {
-            AntiCheat.toggleHistory -= 1;
+            AntiCheat.openTimeline = false;
         }
     }
 }
