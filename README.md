@@ -14,4 +14,4 @@ This "anti-cheat" software is developed so that it is able to run in the backgro
 *
 
 ### Running
-Double-click on [AntiCheatSoftware.exe]
+Double-click on AntiCheatSoftware.exe :shipit:
