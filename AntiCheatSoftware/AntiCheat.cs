@@ -240,6 +240,7 @@ namespace AntiCheatSoftware
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(187, 20);
             this.txtSearch.TabIndex = 10;
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // lblSearch
             // 
@@ -558,5 +559,12 @@ namespace AntiCheatSoftware
             searchProcess();
         }
 
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            if (txtSearch.Text == "")
+            {
+                loadProcessList();
+            }
+        }
     }
 }
