@@ -1,5 +1,5 @@
 # AntiCheatSoftware
-Anti Cheat Software - AS91906
+* Anti Cheat Software - AS91906
 This software was made for the NCEA Digital Technologies 2020 AS91906 standard. NZIQ provided the resources and gained legal use for all the images and copyrighted assets used in the software.
 
 ## About
