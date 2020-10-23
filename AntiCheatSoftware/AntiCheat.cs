@@ -36,20 +36,21 @@ namespace AntiCheatSoftware
         private Label lblSearch;
         private Label label2;
         private ColumnHeader columnHeader1;
+        private Button btnSearch;
         public TextBox txtInput;
 
 
         public AntiCheat()
         {
+         //Execute upon initializing 
             InitializeComponent();
-            loadProcessList();
+            LoadProcessList();
         }
 
         //All this is automatically generated, it is the code for the Design
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AntiCheat));
             this.btnTerminate = new System.Windows.Forms.Button();
             this.lblHead = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
@@ -72,6 +73,7 @@ namespace AntiCheatSoftware
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.notifyIconMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -115,7 +117,6 @@ namespace AntiCheatSoftware
             this.scanProgress.Name = "scanProgress";
             this.scanProgress.Size = new System.Drawing.Size(334, 23);
             this.scanProgress.TabIndex = 3;
-            this.scanProgress.Click += new System.EventHandler(this.scanProgress_Click);
             // 
             // lblTitle
             // 
@@ -186,7 +187,6 @@ namespace AntiCheatSoftware
     "nd";
             this.antiCheatNotifyIcon.BalloonTipTitle = "Automatic Mode";
             this.antiCheatNotifyIcon.ContextMenuStrip = this.notifyIconMenuStrip;
-            this.antiCheatNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("antiCheatNotifyIcon.Icon")));
             this.antiCheatNotifyIcon.Text = "Anti Cheat Software";
             // 
             // notifyIconMenuStrip
@@ -238,7 +238,7 @@ namespace AntiCheatSoftware
             // 
             this.txtSearch.Location = new System.Drawing.Point(140, 600);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(249, 20);
+            this.txtSearch.Size = new System.Drawing.Size(187, 20);
             this.txtSearch.TabIndex = 10;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
@@ -260,10 +260,21 @@ namespace AntiCheatSoftware
             this.label2.TabIndex = 12;
             this.label2.Text = "List of active processes:";
             // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(330, 597);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(59, 23);
+            this.btnSearch.TabIndex = 13;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
             // AntiCheat
             // 
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(454, 659);
+            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblSearch);
             this.Controls.Add(this.txtSearch);
@@ -325,7 +336,7 @@ namespace AntiCheatSoftware
 
         private void LimitHelp()
         {
-              if (openHelp == false)
+            if (openHelp == false)
             {
                 openHelp = true;
                 Help help = new Help();
@@ -344,7 +355,7 @@ namespace AntiCheatSoftware
         }
 
         /*This method will see how the specified process was terminated and will add the process name, time closed and method closed to
-         the database*/ 
+         the database*/
         private void AddData()
         {
             //Adds the date & time, process name and method of closing into the database(in connectionString)
@@ -398,10 +409,10 @@ namespace AntiCheatSoftware
 
                 }
             }
-            
+
         }
 
-        private void loadProcessList()
+        private void LoadProcessList()
         {
             Process[] processes = Process.GetProcesses();
             listProcess.Items.Clear();
@@ -415,26 +426,26 @@ namespace AntiCheatSoftware
 
         }
 
-        private void searchProcess()
+        private void SearchProcess()
         {
 
             //See if the text in the textbox matches any of the items in the viewlist
             if (txtSearch.Text != "")
             {
-                //The viewlist will be filtered through a for loop
+                //The viewlist will be filtered through a foreach loop
                 foreach (ListViewItem item in listProcess.Items)
                 {
                     if (!item.ToString().ToLower().Contains(txtSearch.Text.ToLower()))
                     {
                         listProcess.Items.Remove(item);
-                    }                   
+                    }
                 }
             }
 
             else if (txtSearch.Text == "")
             {
                 //Repopulates the listview, undoing the search filter
-                loadProcessList();
+                LoadProcessList();
             }
 
         }
@@ -473,11 +484,6 @@ namespace AntiCheatSoftware
 
         }
 
-        private void scanProgress_Click(object sender, EventArgs e)
-        {
-            scanProgress.Visible = true;      
-        }
-
         private void chkStealth_MouseHover(object sender, EventArgs e)
         {
             ToolTip toolTip = new ToolTip();
@@ -496,6 +502,7 @@ namespace AntiCheatSoftware
 
         private void stealthTimer_Tick(object sender, EventArgs e)
         {
+            //Interval for the timer is 100ms
             StealthMode();
         }
 
@@ -542,10 +549,18 @@ namespace AntiCheatSoftware
             }
         }
 
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            //When the search button is pressed, look for the searched item
+            SearchProcess();
+        }
+
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            //When there's a change in the textbox, look for the searched item
-            searchProcess();
+            if (txtSearch.Text == "")
+            {
+                LoadProcessList();
+            }
         }
     }
 }
