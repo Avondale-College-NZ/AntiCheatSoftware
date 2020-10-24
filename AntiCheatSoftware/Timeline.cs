@@ -19,7 +19,7 @@ namespace AntiCheatSoftware
             InitializeComponent();
         }
 
-        string conString = @"Data Source = tpisql01.avcol.school.nz; Initial Catalog = ProcessTimeline; Integrated Security = True;";
+        string conString = @"Data Source = tpisql01.avcol.school.nz; Initial Catalog = TrevorLPLDB; Integrated Security = True;";
 
         void FillList()
         {

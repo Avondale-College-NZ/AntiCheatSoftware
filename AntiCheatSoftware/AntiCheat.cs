@@ -305,7 +305,7 @@ namespace AntiCheatSoftware
 
         //Private variables
         bool stealth = false;
-        string connectionString = @"Data Source = tpisql01.avcol.school.nz; Initial Catalog = ProcessTimeline; Integrated Security = True;";
+        string connectionString = @"Data Source = tpisql01.avcol.school.nz; Initial Catalog = TrevorLPLDB; Integrated Security = True;";
 
         //Methods
 
