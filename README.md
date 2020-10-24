@@ -11,5 +11,6 @@ This "anti-cheat" software is developed so that it is able to run in the backgro
 
 ## Installation
 1. Download the code
+2. Extract the folder
 2. Open AntiCheatSoftware solution
 3. Run the program 
