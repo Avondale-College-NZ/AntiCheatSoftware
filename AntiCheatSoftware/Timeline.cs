@@ -23,7 +23,7 @@ namespace AntiCheatSoftware
 
         void FillList()
         {
-            //Open connection to ProcessTimeline database and connect to Timeline query 
+            //Open connection to TrevorLPLDB database and connect to Timeline query 
             using (SqlConnection sqlCon = new SqlConnection(conString))
             {
                 sqlCon.Open();
