@@ -23,7 +23,8 @@ namespace AntiCheatSoftware
 
         void FillList()
         {
-            //Open connection to TrevorLPLDB database and connect to Timeline query 
+            /*Open connection to TrevorLPLDB database and execute the Timeline query 
+             then retrieve all the rows from the tblTimeline table using the ExecuteReader method*/
             using (SqlConnection sqlCon = new SqlConnection(conString))
             {
                 sqlCon.Open();
@@ -33,7 +34,7 @@ namespace AntiCheatSoftware
                 sqlCmd.Connection = sqlCon;
                 dr = sqlCmd.ExecuteReader();
 
-                //Adds all the columns from tblTimeline into the listProcess listview
+                //Adds all the data retrieved from tblTimeline into the listProcess listview
                 while (dr.Read())
                 {
                     ListViewItem item = new ListViewItem(dr[0].ToString());
