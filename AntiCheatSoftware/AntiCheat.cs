@@ -363,7 +363,9 @@ namespace AntiCheatSoftware
             {
                 //First we open the connection
                 sqlCon.Open();
-                //SqlCommand helps us execute commands from here to the database
+                /*SqlCommand reprensents stored procedures from the query
+                 and using the AddWithValue method we can add data for ProcessName, DateClosed and 
+                Method closed and the ExecuteNonQuery method executes the stored procedures*/
                 SqlCommand sqlCmd = new SqlCommand("Timeline", sqlCon);
                 sqlCmd.CommandType = CommandType.StoredProcedure;
                 sqlCmd.Parameters.AddWithValue("@ProcessName", txtInput.Text.Trim());
