@@ -56,15 +56,15 @@
             this.ProcessNumber.Text = "Process";
             this.ProcessNumber.Width = 50;
             // 
-            // DateClose
-            // 
-            this.DateClose.Text = "Date Closed";
-            this.DateClose.Width = 161;
-            // 
             // ProcessName
             // 
             this.ProcessName.Text = "Name";
             this.ProcessName.Width = 131;
+            // 
+            // DateClose
+            // 
+            this.DateClose.Text = "Date Closed";
+            this.DateClose.Width = 161;
             // 
             // MethodClose
             // 
@@ -89,8 +89,8 @@
 
         private System.Windows.Forms.ListView listTimeline;
         private System.Windows.Forms.ColumnHeader ProcessNumber;
-        private System.Windows.Forms.ColumnHeader DateClose;
         private System.Windows.Forms.ColumnHeader ProcessName;
+        private System.Windows.Forms.ColumnHeader DateClose;
         private System.Windows.Forms.ColumnHeader MethodClose;
     }
 }
